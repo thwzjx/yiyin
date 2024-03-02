@@ -1,0 +1,60 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: macOS-arm
+    runs-on: macos-14
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build ${{ runner.arch }}
+        run: yarn make
+
+      - name: Cleanup Artifacts for MacOs
+        run: npx rimraf "dist/!(*.dmg)"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.arch }}
+          path: dist
+
+  release:
+    needs: build
+    runs-on: macos-14
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+          path: dist
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./dist/*
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          body: |
+            Description of the release
+
