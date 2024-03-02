@@ -19,7 +19,7 @@ jobs:
       max-parallel: 1
       matrix:
         os: [macOS-latest, windows-latest]
-        arch: [x64]
+        arch: [arm64]
 
     steps:
       - name: Node
