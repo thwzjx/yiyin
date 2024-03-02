@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: macOS-latest
-    runs-on: macOS-latest
+    runs-on: self-hosted
     permissions:
       contents: write
       packages: write
