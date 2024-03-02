@@ -52,7 +52,7 @@ export const hasNewVersion = async (): Promise<INewVersionRes> => {
     version: `v${import.meta.env.VITE_VERSION}`,
   };
 
-  const res = await tryAsyncCatch(axios.get<IReleaseData>('https://api.github.com/repos/ggchivalrous/yiyin/releases/latest'));
+  const res = await tryAsyncCatch(axios.get<IReleaseData>('https://api.github.com/repos/thwzjx/yiyin/releases/latest'));
 
   if (!res || !res.data) {
     return updateInfo;
@@ -74,7 +74,7 @@ export const hasNewVersion = async (): Promise<INewVersionRes> => {
     default: ext = 'exe';
   }
 
-  const assetsName = `yiyin-${updateInfo.version}-${process.platform}-x64.${ext}`;
+  const assetsName = `yiyin-${updateInfo.version}-${process.platform}-arm64.${ext}`;
   const assets = data.assets.find((i) => i.name === assetsName);
 
   if (assets) {
