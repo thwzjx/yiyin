@@ -16,7 +16,7 @@ const octokit = new Octokit({
 
 function getRelease() {
   return octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
-    owner: 'ggchivalrous',
+    owner: 'thwzjx',
     repo: 'yiyin',
     headers: {
       'X-GitHub-Api-Version': '2022-11-28',
@@ -35,7 +35,7 @@ function updateReleaseAsset(releaseId, filePath, name) {
       -H "Authorization: Bearer ${process.env.GITHUB_TOKEN}" \
       -H "X-GitHub-Api-Version: 2022-11-28" \
       -H "Content-Type: ${type}" \
-      "https://uploads.github.com/repos/ggchivalrous/yiyin/releases/${releaseId}/assets?name=${name}" \
+      "https://uploads.github.com/repos/thwzjx/yiyin/releases/${releaseId}/assets?name=${name}" \
       --data-binary "@${filePath}"`,
       (error, stdout, stderr) => {
         if (error) {
