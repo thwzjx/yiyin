@@ -37,6 +37,9 @@ jobs:
           yarn make
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Cleanup Artifacts for MacOs
+        run: |
+          npx rimraf "dist/!(*.dmg)"
       - name: upload artifacts
         uses: actions/upload-artifact@v3.0.0
         with:
